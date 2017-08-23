@@ -1,0 +1,44 @@
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'war'
+
+war {
+    baseName = 'hello'
+    version =  '0.0.1-SNAPSHOT'    
+}
+
+group = 'com.aceinfo.sbtowlogic'
+version = '0.0.1-SNAPSHOT'
+
+description = """SprinBootToWeblogic"""
+
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+
+
+repositories {
+        
+     maven { url "http://repo.maven.apache.org/maven2" }
+}
+
+configurations {
+ compile.exclude group:'ch.qos.logback'
+}
+
+
+
+dependencies {
+    compile(group: 'org.springframework.boot', name: 'spring-boot-starter-web', version:'1.5.6.RELEASE') {
+		exclude(module: 'logback-classic')
+    }
+    providedRuntime(group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version:'1.5.6.RELEASE')
+    
+    testCompile(group: 'org.springframework.boot', name: 'spring-boot-starter-test', version:'1.5.6.RELEASE') {
+		exclude(module: 'commons-logging')
+    }
+}
